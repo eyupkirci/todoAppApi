@@ -46,19 +46,19 @@ def todoList(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
         
-@api_view(['PUT'])
-def todoListUpdate(request,pk):
-    queryset= Todo.objects.get(id=pk)
-    serializer=TodoSerializer(instance=queryset,data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-    return Response(serializer.data)
+# @api_view(['PUT'])
+# def todoListUpdate(request,pk):
+#     queryset= Todo.objects.get(id=pk)
+#     serializer=TodoSerializer(instance=queryset,data=request.data)
+#     if serializer.is_valid():
+#         serializer.save()
+#     return Response(serializer.data)
 
-@api_view(['DELETE'])
-def todoListDelete(request,pk):
-    queryset= Todo.objects.get(id=pk)
-    queryset.delete()
-    return Response("Deleted")
+# @api_view(['DELETE'])
+# def todoListDelete(request,pk):
+#     queryset= Todo.objects.get(id=pk)
+#     queryset.delete()
+#     return Response("Deleted")
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
