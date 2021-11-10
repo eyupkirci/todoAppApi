@@ -17,7 +17,7 @@ from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 
 
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, mixins, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 
 #home
@@ -133,6 +133,38 @@ class TodoDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 
+##################### Generic View ########################
+class TodoListCreate(mixins.ListModelMixin, mixins.CreateModelMixin, GenericAPIView):
+    queryset= Todo.objects.all()
+    serializer_class=TodoSerializer
+    
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
+class TodoRetrieveUpdateDelete(mixins.RetrieveModelMixin,mixins.UpdateModelMixin, mixins.DestroyModelMixin, GenericAPIView):
+    queryset= Todo.objects.all()
+    serializer_class=TodoSerializer
     
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
     
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+    
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+
+############################ Concrete View #########################
+
+class TodoConcListCreate(ListCreateAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+
+
+class TodoConcRetreiveUpdateDelete(RetrieveUpdateDestroyAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
