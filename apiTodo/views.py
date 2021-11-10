@@ -11,7 +11,7 @@ from rest_framework import status
 from .serializers import TodoSerializer
 from .models import Todo
 
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, action
 # Create your views here.
 
 from rest_framework.views import APIView
@@ -177,9 +177,19 @@ class TodoVSRetrieve(mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericVi
     serializer_class = TodoSerializer
     
 
-####################***** Model View  Set *****#########################
+##### ***** Model View  Set ***** #####
 
 class TodoMVS(ModelViewSet):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
+    
+    
+    #custom path initializing
+    @action(detail=False, methods=['get'])
+    def todo_count(self, request):
+        todo_count =Todo.objects.filter(done=False).count()                                                                 
+        count={
+            'undo-todos':todo_count
+        }
+        return Response({'count':count})
     
