@@ -14,14 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from .views import home, todoList, todoDetail
+from .views import home,todoListCreate, todoList, todoListUpdate, todoListDelete, todoDetail, TodoList, TodoDetail
 
 urlpatterns = [
     path('', home, name='home'),
-    path('todoList/', todoList, name='todoList'), # combined
-    # path('todoListCreate/', todoListCreate, name='todoListCreate'),
-    # path('todoListUpdate/<int:pk>', todoListUpdate, name='todoListUpdate'),
-    # path('todoListDelete/<int:pk>', todoListDelete, name='todoListDelete'),
-    path('todoDetail/<int:pk>', todoDetail, name='todoDetail'),
     
+    #@api_view
+    # path('todoList/', todoList, name='todoList'), # combined
+    # # path('todoListCreate/', todoListCreate, name='todoListCreate'),
+    # # path('todoListUpdate/<int:pk>', todoListUpdate, name='todoListUpdate'),
+    # # path('todoListDelete/<int:pk>', todoListDelete, name='todoListDelete'),
+    # path('todoDetail/<int:pk>', todoDetail, name='todoDetail'),
+    
+    #API VIEW
+    path('todo-list/', TodoList.as_view()),
+    path('todo-detail/<int:pk>', TodoDetail.as_view()),
 ]
