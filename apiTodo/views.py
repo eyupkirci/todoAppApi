@@ -19,6 +19,8 @@ from rest_framework.views import APIView
 
 from rest_framework.generics import GenericAPIView, mixins, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
+
 
 #home
 def home(request):
@@ -168,3 +170,16 @@ class TodoConcListCreate(ListCreateAPIView):
 class TodoConcRetreiveUpdateDelete(RetrieveUpdateDestroyAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
+    
+############################  View  Set #########################
+class TodoVSRetrieve(mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericViewSet):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+    
+
+####################***** Model View  Set *****#########################
+
+class TodoMVS(ModelViewSet):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+    

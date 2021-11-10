@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path
+from django.urls import path, include
 from .views import (home,
                     # todoListCreate,
                     # todoList,
@@ -24,9 +24,19 @@ from .views import (home,
                     # TodoDetail,
                     # TodoListCreate,
                     # TodoRetrieveUpdateDelete,
-                    TodoConcListCreate,
-                    TodoConcRetreiveUpdateDelete                    
+                    # TodoConcListCreate,
+                    # TodoConcRetreiveUpdateDelete,
+                    # TodoVSRetrieve,
+                    TodoMVS
+                                      
                     )
+
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+# router.register('todovs-list',TodoVSRetrieve )
+router.register('todomvs',TodoMVS )
+
 
 urlpatterns = [
     path('', home, name='home'),
@@ -47,7 +57,8 @@ urlpatterns = [
     # path('todo-detail/<int:pk>', TodoRetrieveUpdateDelete.as_view()),
     
     #GENERIC View
-    path('todo-list/', TodoConcListCreate.as_view()),
-    path('todo-detail/<int:pk>', TodoConcRetreiveUpdateDelete.as_view()),
+    # path('todo-list/', TodoConcListCreate.as_view()),
+    # path('todo-detail/<int:pk>', TodoConcRetreiveUpdateDelete.as_view()),
+    path('', include(router.urls))
 ]
 
